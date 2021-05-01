@@ -19,9 +19,7 @@
         "php": "^8.0",
         "spatie/laravel-package-tools": "^1.4.3",
         "illuminate/contracts": "^8.37",
-        "thecodingmachine/safe": "^1.3"
-    },
-    "require-dev": {
+        "thecodingmachine/safe": "^1.3",
         "barryvdh/laravel-debugbar": "^3.5",
         "ergebnis/phpstan-rules": "^0.15.3",
         "fakerphp/faker": "^1.14",
