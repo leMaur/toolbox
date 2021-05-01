@@ -1,0 +1,11 @@
+parameters:
+    paths:
+        - app
+    excludePaths:
+        - app/Nova/*
+    includes:
+        - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+    level: 8
+    ignoreErrors:
+        - '#is not allowed to extend#'
+    checkMissingIterableValueType: false
