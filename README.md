@@ -13,15 +13,35 @@ You can install the package via composer:
 composer require lemaur/toolbox
 ```
 
-You can publish:
+You can launch the installation:
 
 ```bash
 php artisan toolbox:install --force
 ```
 
+Add there scripts to your `composer.json`:
+```bash
+"scripts": {
+    "analyse": "./vendor/bin/phpstan analyse --memory-limit=2G",
+    "rector": "./vendor/bin/rector process",
+    "format": "./vendor/bin/php-cs-fixer fix --allow-risky=yes --config vendor/thecodingmachine/safe/rector-migrate-0.7.php",
+    "test": "./vendor/bin/pest --coverage --min=100 --coverage-html=.coverage --coverage-clover=coverage.xml --printer mheap\\GithubActionsReporter\\Printer",
+}
+```
+
 ## Testing
 
 ```bash
+# Analyse
+composer analyse
+
+# Run Rector
+composer rector
+
+# Run Code Style Formatting
+composer format
+
+# Run tests
 composer test
 ```
 
