@@ -16,6 +16,7 @@
         }
     ],
     "require": {
+        "php": "^8.0",
         "barryvdh/laravel-debugbar": "^3.5",
         "ergebnis/phpstan-rules": "^0.15.3",
         "fakerphp/faker": "^1.14",
@@ -34,13 +35,13 @@
         "pestphp/pest": "^1.0",
         "pestphp/pest-plugin-faker": "^1.0",
         "pestphp/pest-plugin-laravel": "^1.0",
-        "php": "^8.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^0.12.6",
         "phpstan/phpstan-strict-rules": "^0.12.9",
         "phpunit/phpunit": "^9.3",
         "rector/rector": "^0.10.16",
         "rector/rector-laravel": "^0.10.2",
+        "rector/rector-phpunit": "^0.10.8",
         "spatie/laravel-package-tools": "^1.4.3",
         "spatie/laravel-ray": "^1.9",
         "spatie/pest-plugin-snapshots": "^1.0"
