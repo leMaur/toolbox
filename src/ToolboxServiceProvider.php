@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lemaur\Toolbox;
 
+use Lemaur\Toolbox\Commands\PublishCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Lemaur\Toolbox\Commands\PublishCommand;
 
 class ToolboxServiceProvider extends PackageServiceProvider
 {
