@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Rector\Core\Configuration\Option;
+use Rector\Laravel\Set\LaravelSetList;
+use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -10,7 +12,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
     $parameters->set(Option::PATHS, [__DIR__.'/app', __DIR__.'/tests']);
-    $parameters->set(Option::AUTOLOAD_PATHS, false);
+    $parameters->set(Option::SKIP, [__DIR__.'/app/Nova']);
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
     $parameters->set(Option::IMPORT_SHORT_CLASSES, false);
     $parameters->set(Option::IMPORT_DOC_BLOCKS, false);
@@ -23,20 +25,21 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::SETS, [
         SetList::CARBON_2,
         SetList::CODE_QUALITY,
-        SetList::DEAD_DOC_BLOCK,
         SetList::EARLY_RETURN,
-        SetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
-        SetList::LARAVEL_CODE_QUALITY,
+        LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
+        LaravelSetList::LARAVEL_CODE_QUALITY,
         SetList::NAMING,
         SetList::ORDER,
         SetList::PHP_74,
         SetList::PSR_4,
         SetList::SAFE_07,
         SetList::TYPE_DECLARATION,
-        SetList::PHPUNIT_CODE_QUALITY,
-        SetList::PHPUNIT_90,
-        SetList::PHPUNIT_91,
+        SetList::PRIVATIZATION,
     ]);
+
+    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_CODE_QUALITY);
+    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_90);
+    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_91);
 
     $services = $containerConfigurator->services();
 
@@ -152,12 +155,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     // Privatization
     // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#privatization
-    $services->set(\Rector\Privatization\Rector\Class_\FinalizeClassesWithoutChildrenRector::class);
-    $services->set(\Rector\Privatization\Rector\ClassMethod\MakeOnlyUsedByChildrenProtectedRector::class);
-    $services->set(\Rector\Privatization\Rector\Class_\MakeUnusedClassesWithChildrenAbstractRector::class);
-    $services->set(\Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector::class);
-    $services->set(\Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector::class);
-    $services->set(\Rector\Privatization\Rector\ClassConst\PrivatizeLocalClassConstantRector::class);
+//    $services->set(\Rector\Privatization\Rector\Class_\FinalizeClassesWithoutChildrenRector::class);
+//    $services->set(\Rector\Privatization\Rector\ClassMethod\MakeOnlyUsedByChildrenProtectedRector::class);
+//    $services->set(\Rector\Privatization\Rector\Class_\MakeUnusedClassesWithChildrenAbstractRector::class);
+//    $services->set(\Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector::class);
+//    $services->set(\Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector::class);
+//    $services->set(\Rector\Privatization\Rector\ClassConst\PrivatizeLocalClassConstantRector::class);
 
     // Restoration
     // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#restoration
