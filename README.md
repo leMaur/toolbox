@@ -24,8 +24,8 @@ Add there scripts to your `composer.json`:
 "scripts": {
     "analyse": "./vendor/bin/phpstan analyse --memory-limit=2G",
     "rector": "./vendor/bin/rector process",
-    "format": "./vendor/bin/php-cs-fixer fix --allow-risky=yes --config vendor/thecodingmachine/safe/rector-migrate-0.7.php",
-    "test": "./vendor/bin/pest --coverage --min=100 --coverage-html=.coverage --coverage-clover=coverage.xml --printer mheap\\GithubActionsReporter\\Printer",
+    "format": "./vendor/bin/php-cs-fixer fix --allow-risky=yes",
+    "test": "./vendor/bin/pest --printer mheap\\GithubActionsReporter\\Printer --coverage --min=100 --coverage-html=.coverage --coverage-clover=coverage.xml",
 }
 ```
 
