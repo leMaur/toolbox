@@ -1,4 +1,4 @@
-# Tools every developer needs to build the next project
+# Tools to help you build your next project
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/lemaur/toolbox.svg?style=flat-square)](https://packagist.org/packages/lemaur/toolbox)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/lemaur/toolbox/run-tests?label=tests)](https://github.com/lemaur/toolbox/actions?query=workflow%3Arun-tests+branch%3Amaster)
@@ -9,29 +9,38 @@
 
 You can install the package via composer:
 
-```bash
+```
 composer require lemaur/toolbox
 ```
 
 You can launch the installation:
 
-```bash
+```
 php artisan toolbox:install --force
 ```
 
-Add there scripts to your `composer.json`:
-```bash
+Add those scripts to your `composer.json`:
+```
 "scripts": {
     "analyse": "./vendor/bin/phpstan analyse --memory-limit=2G",
     "rector": "./vendor/bin/rector process",
     "format": "./vendor/bin/php-cs-fixer fix --allow-risky=yes",
-    "test": "./vendor/bin/pest --printer mheap\\GithubActionsReporter\\Printer --coverage --min=100 --coverage-html=.coverage --coverage-clover=coverage.xml",
+    "test": "./vendor/bin/pest --coverage --min=100 --coverage-html=.coverage --coverage-clover=coverage.xml"
 }
 ```
 
-## Testing
+If you use a continuous integration, you can run your test with a custom printer:
+```
+# an example from Github Actions
+...
+- name: Run Tests
+  run: ./vendor/bin/pest --printer mheap\\GithubActionsReporter\\Printer --coverage --min=100 --coverage-html=.coverage --coverage-clover=coverage.xml
+...
+```
 
-```bash
+## Available commands 
+
+```
 # Analyse
 composer analyse
 
