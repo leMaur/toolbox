@@ -11,8 +11,15 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
-    $parameters->set(Option::PATHS, [__DIR__.'/app', __DIR__.'/tests']);
-    $parameters->set(Option::SKIP, [__DIR__.'/app/Nova']);
+    $parameters->set(Option::PATHS, [
+        __DIR__.'/app',
+//        __DIR__.'/tests',
+    ]);
+    $parameters->set(Option::SKIP, [
+        __DIR__.'/app/Nova',
+//        __DIR__.'/app/Actions/Fortify',
+//        __DIR__.'/app/Actions/Jetstream',
+    ]);
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
     $parameters->set(Option::IMPORT_SHORT_CLASSES, false);
     $parameters->set(Option::IMPORT_DOC_BLOCKS, false);
@@ -108,7 +115,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(\Rector\Php80\Rector\Class_\AnnotationToAttributeRector::class);
     $services->set(\Rector\Php80\Rector\Switch_\ChangeSwitchToMatchRector::class);
     $services->set(\Rector\Php80\Rector\FuncCall\ClassOnObjectRector::class);
-//    $services->set(\Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector::class);
     $services->set(\Rector\Php80\Rector\ClassMethod\FinalPrivateToPrivateVisibilityRector::class);
     $services->set(\Rector\Php80\Rector\Ternary\GetDebugTypeRector::class);
     $services->set(\Rector\Php80\Rector\If_\NullsafeOperatorRector::class);
@@ -152,15 +158,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'pg_setclientencoding' => 'pg_set_client_encoding',
             ],
         ]]);
-
-    // Privatization
-    // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#privatization
-//    $services->set(\Rector\Privatization\Rector\Class_\FinalizeClassesWithoutChildrenRector::class);
-//    $services->set(\Rector\Privatization\Rector\ClassMethod\MakeOnlyUsedByChildrenProtectedRector::class);
-//    $services->set(\Rector\Privatization\Rector\Class_\MakeUnusedClassesWithChildrenAbstractRector::class);
-//    $services->set(\Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector::class);
-//    $services->set(\Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector::class);
-//    $services->set(\Rector\Privatization\Rector\ClassConst\PrivatizeLocalClassConstantRector::class);
 
     // Restoration
     // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#restoration
