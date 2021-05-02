@@ -6,5 +6,5 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\DuskTestCase;
 use Tests\TestCase;
 
-uses(TestCase::class, RefreshDatabase::class)->in(__DIR__);
-uses(DuskTestCase::class)->in('Browser');
+uses(TestCase::class, RefreshDatabase::class)->in('Analysis', 'Feature', 'Unit');
+uses(DuskTestCase::class, RefreshDatabase::class)->group('e2e')->in('Browser');
