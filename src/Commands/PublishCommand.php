@@ -42,6 +42,7 @@ class PublishCommand extends Command
             // 'commons'
             __DIR__.'/../Commands/stubs/.editorconfig.stub' => base_path('.editorconfig'),
             __DIR__.'/../Commands/stubs/.gitignore.stub' => base_path('.gitignore'),
+            __DIR__.'/../Commands/stubs/.env.dusk' => base_path('.env.dusk'),
 
         ]);
 
