@@ -6,4 +6,6 @@ parameters:
     level: 8
     ignoreErrors:
         - '#is not allowed to extend#'
+        - '#has a nullable return type declaration#'
+        - '#should return string\|null but return statement is missing#'
     checkMissingIterableValueType: false
