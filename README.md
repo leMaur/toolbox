@@ -68,8 +68,7 @@ Add those scripts to your `composer.json`:
 }
 ```
 
-If you use a continuous integration, you can run your test with a custom printer:
-[for more info](https://github.com/mheap/phpunit-github-actions-printer)
+If you use a continuous integration, you can run your test with a [custom printer](https://github.com/mheap/phpunit-github-actions-printer):
 ```
 # an example from Github Actions
 
