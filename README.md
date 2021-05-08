@@ -8,10 +8,10 @@
 [![Trees](https://img.shields.io/badge/dynamic/json?color=yellowgreen&style=flat-square&label=Trees&query=%24.total&url=https%3A%2F%2Fpublic.offset.earth%2Fusers%2Flemaur%2Ftrees)](https://ecologi.com/lemaur?r=6012e849de97da001ddfd6c9)
 
 ## What's Included
-- Rector
-- Pest
-- Dusk
-- Larastan
+- [Rector](https://github.com/rectorphp/rector)
+- [Pest](https://pestphp.com/)
+- [Dusk](https://laravel.com/docs/8.x/dusk)
+- [Larastan](https://github.com/nunomaduro/larastan)
 - [Php Cs Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
 
 ## Support Me
@@ -36,8 +36,26 @@ composer require --dev lemaur/toolbox
 ```
 
 Launch the installation:
+> Be careful, this command (with `--force` option) will overwrite [existing files](https://github.com/leMaur/toolbox/blob/master/src/Commands/PublishCommand.php#L38) in your project.
+
+If you install this package in a fresh Laravel installation, you can simply run:
 ```
-php artisan toolbox:install --force
+php artisan toolbox:install --test-suites --force
+```
+
+Otherwise, you can install only the group of files you may need without test suites:
+```
+php artisan toolbox:install --force --only="static-analysis"
+
+# or you can specify multiple values
+php artisan toolbox:install --force --only="static-analysis" --only="code-style"
+
+# Available values:
+- static-analysis
+- code-style
+- rector
+- tests
+- common
 ```
 
 Add those scripts to your `composer.json`:
