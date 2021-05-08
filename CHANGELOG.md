@@ -2,11 +2,11 @@
 
 All notable changes to `toolbox` will be documented in this file.
 
-## 1.2.1 - 2021-05-08
+## 2.1.0 - 2021-05-08
 
-- fix github workflows
+- add --only option to toolbox:install command
 
-## 1.2.0 - 2021-05-08
+## 2.0.0 - 2021-05-08
 
 - update php-cs-fixer
 - update phpunit-speedtrap
