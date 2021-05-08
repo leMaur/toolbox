@@ -30,7 +30,7 @@ class PublishCommand extends Command
             __DIR__.'/../Commands/stubs/tests/Analysis/AnalysisTest.php.stub' => base_path('tests/Analysis/AnalysisTest.php'),
 
             // 'code-style'
-            __DIR__.'/../Commands/stubs/.php_cs.stub' => base_path('.php_cs'),
+            __DIR__ . '/../Commands/stubs/.php-cs-fixer.stub' => base_path('.php-cs-fixer'),
 
             // 'rector'
             __DIR__.'/../Commands/stubs/rector.php.stub' => base_path('rector.php'),

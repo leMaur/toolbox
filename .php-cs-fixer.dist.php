@@ -1,26 +1,27 @@
 <?php
 
-$finder = Symfony\Component\Finder\Finder::create()
+$finder = PhpCsFixer\Finder::create()
     ->notPath('bootstrap/*')
     ->notPath('storage/*')
     ->notPath('resources/view/mail/*')
-    ->in([
-        __DIR__ . '/src',
-    ])
     ->name('*.php')
     ->notName('*.blade.php')
     ->ignoreDotFiles(true)
-    ->ignoreVCS(true);
+    ->ignoreVCS(true)
+    ->in([
+        __DIR__ . '/src',
+    ]);
 
-return PhpCsFixer\Config::create()
+$config = new PhpCsFixer\Config();
+return $config
     ->setRules([
         '@PSR2' => true,
         'declare_strict_types' => true,
         'array_syntax' => ['syntax' => 'short'],
-        'ordered_imports' => ['sortAlgorithm' => 'alpha'],
+        'ordered_imports' => ['sort_algorithm' => 'alpha'],
         'no_unused_imports' => true,
         'not_operator_with_successor_space' => true,
-        'trailing_comma_in_multiline_array' => true,
+        'trailing_comma_in_multiline' => true,
         'phpdoc_scalar' => true,
         'unary_operator_spaces' => true,
         'binary_operator_spaces' => true,
@@ -33,7 +34,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_var_without_name' => true,
         'class_attributes_separation' => [
             'elements' => [
-                'method',
+                'method' => 'one',
             ],
         ],
         'method_argument_space' => [
