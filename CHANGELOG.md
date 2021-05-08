@@ -2,9 +2,14 @@
 
 All notable changes to `toolbox` will be documented in this file.
 
-## 1.0.0 - 2021-05-02
+## 1.2.1 - 2021-05-08
 
-- initial release
+- fix github workflows
+
+## 1.2.0 - 2021-05-08
+
+- update php-cs-fixer
+- update phpunit-speedtrap
 
 ## 1.1.0 - 2021-05-02
 
@@ -13,7 +18,7 @@ All notable changes to `toolbox` will be documented in this file.
 - update phpstan.neon.stub
 - update PublishCommand.php
 
-## 1.2.0 - 2021-05-08
+## 1.0.0 - 2021-05-02
 
-- update php-cs-fixer
-- update phpunit-speedtrap
+- initial release
+
