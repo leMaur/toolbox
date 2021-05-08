@@ -12,13 +12,13 @@
 - Pest
 - Dusk
 - Larastan
-- Php Cs Fixer
+- [Php Cs Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
 
 ## Support Me
 
 Hey folks,
 
-Do you like this package? Do you find it useful and it fits well in your project?
+Do you like this package? Do you find it useful, and it fits well in your project?
 
 I am glad to help you, and I would be so grateful if you considered supporting my work.
 
@@ -32,7 +32,7 @@ You can even choose 😃:
 
 Install the package via composer:
 ```
-composer require lemaur/toolbox
+composer require --dev lemaur/toolbox
 ```
 
 Launch the installation:

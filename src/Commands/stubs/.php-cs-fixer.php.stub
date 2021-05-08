@@ -3,8 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Rules taken from [Laravel Shift](https://gist.github.com/laravel-shift/cab527923ed2a109dda047b97d53c200)
- * with some adjustments.
+ * List of available rules: https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/3.0/doc/rules/index.rst
  */
 $rules = [
     'array_syntax' => ['syntax' => 'short'],
@@ -37,13 +36,13 @@ $rules = [
     'concat_space' => ['spacing' => 'none'],
     'constant_case' => ['case' => 'lower'],
     'declare_equal_normalize' => true,
-    'declare_strict_types' => true, // added by Lemaur
+    'declare_strict_types' => true,
     'echo_tag_syntax' => ['format' => 'long'],
     'elseif' => true,
     'encoding' => true,
-    'final_internal_class' => true, // added by Lemaur
+    'final_internal_class' => true,
     'full_opening_tag' => true,
-    'fully_qualified_strict_types' => true, // added by Shift
+    'fully_qualified_strict_types' => true,
     'function_declaration' => true,
     'function_typehint_space' => true,
     'heredoc_to_nowdoc' => true,
@@ -54,13 +53,13 @@ $rules = [
     'line_ending' => true,
     'lowercase_cast' => true,
     'lowercase_keywords' => true,
-    'lowercase_static_reference' => true, // added from Symfony
-    'magic_method_casing' => true, // added from Symfony
+    'lowercase_static_reference' => true,
+    'magic_method_casing' => true,
     'magic_constant_casing' => true,
     'method_argument_space' => true,
     'multiline_whitespace_before_semicolons' => ['strategy' => 'no_multi_line'],
     'native_function_casing' => true,
-    'new_with_braces' => true, // added by Lemaur
+    'new_with_braces' => true,
     'no_alias_functions' => true,
     'no_blank_lines_after_class_opening' => true,
     'no_blank_lines_after_phpdoc' => true,
@@ -102,8 +101,8 @@ $rules = [
         ],
     ],
     'no_unreachable_default_argument_value' => true,
-    'no_unused_imports' => true, // added by Lemaur
-    'no_useless_else' => true, // added by Lemaur
+    'no_unused_imports' => true,
+    'no_useless_else' => true,
     'no_useless_return' => true,
     'no_whitespace_before_comma_in_array' => true,
     'no_whitespace_in_blank_line' => true,
@@ -111,16 +110,16 @@ $rules = [
     'not_operator_with_successor_space' => true,
     'object_operator_without_whitespace' => true,
     'ordered_imports' => ['sort_algorithm' => 'alpha'],
-    'php_unit_strict' => true, // added by Lemaur
-    'php_unit_test_class_requires_covers' => true, // added by Lemaur
-    'phpdoc_add_missing_param_annotation' => true, // added by Lemaur
-    'phpdoc_align' => false, // added by Lemaur
+    'php_unit_strict' => true,
+    'php_unit_test_class_requires_covers' => true,
+    'phpdoc_add_missing_param_annotation' => true,
+    'phpdoc_align' => false,
     'phpdoc_indent' => true,
-    'phpdoc_inline_tag_normalizer',
+    'phpdoc_inline_tag_normalizer' => true,
     'phpdoc_no_access' => true,
     'phpdoc_no_package' => true,
     'phpdoc_no_useless_inheritdoc' => true,
-    'phpdoc_order' => true, // added by Lemaur
+    'phpdoc_order' => true,
     'phpdoc_scalar' => true,
     'phpdoc_single_line_var_spacing' => true,
     'phpdoc_summary' => true,
@@ -132,7 +131,7 @@ $rules = [
     'self_accessor' => true,
     'semicolon_after_instruction' => true,
     'short_scalar_cast' => true,
-    'simplified_null_return' => true, // added by Lemaur
+    'simplified_null_return' => true,
     'single_blank_line_at_eof' => true,
     'single_blank_line_before_namespace' => true,
     'single_class_element_per_statement' => [
@@ -150,13 +149,13 @@ $rules = [
     'single_trait_insert_per_statement' => true,
     'space_after_semicolon' => true,
     'standardize_not_equals' => true,
-    'strict_comparison' => true, // added by Lemaur
-    'strict_param' => true, // added by Lemaur
+    'strict_comparison' => true,
+    'strict_param' => true,
     'switch_case_semicolon_to_colon' => true,
     'switch_case_space' => true,
     'ternary_operator_spaces' => true,
     'trailing_comma_in_multiline' => [
-        'elements' => 'arrays',
+        'elements' => ['arrays'],
     ],
     'trim_array_spaces' => true,
     'unary_operator_spaces' => true,
@@ -166,7 +165,7 @@ $rules = [
             'method',
             'const',
         ],
-    ], // added by Lemaur
+    ],
     'whitespace_after_comma_in_array' => true,
 ];
 
