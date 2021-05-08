@@ -20,7 +20,7 @@
         "barryvdh/laravel-debugbar": "^3.5",
         "ergebnis/phpstan-rules": "^0.15.3",
         "fakerphp/faker": "^1.14",
-        "friendsofphp/php-cs-fixer": "^2.18",
+        "friendsofphp/php-cs-fixer": "^v3.0",
         "graham-campbell/analyzer": "^3.0",
         "illuminate/contracts": "^8.37",
         "jasonmccreary/laravel-test-assertions": "^1.1",
