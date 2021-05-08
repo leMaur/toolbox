@@ -24,7 +24,7 @@
         "graham-campbell/analyzer": "^3.0",
         "illuminate/contracts": "^8.37",
         "jasonmccreary/laravel-test-assertions": "^1.1",
-        "johnkary/phpunit-speedtrap": "^3.3",
+        "johnkary/phpunit-speedtrap": "^v4.0",
         "laravel/dusk": "^6.15",
         "mheap/phpunit-github-actions-printer": "^1.5",
         "mockery/mockery": "^1.4",
