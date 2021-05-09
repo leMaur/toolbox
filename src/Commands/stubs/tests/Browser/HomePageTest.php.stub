@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\HomePage;
 
-it('ensures homepage is visible to everyone', function () {
+//beforeEach(fn () => Artisan::call('db:seed'));
+
+it('ensures home page is visible to everyone', function () {
     Auth::logout();
 
     $this->browse(function (Browser $browser): void {

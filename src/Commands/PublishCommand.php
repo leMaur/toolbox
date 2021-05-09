@@ -34,9 +34,13 @@ class PublishCommand extends Command
             ],
 
             'tests' => [
+                __DIR__.'/../Commands/stubs/tests/Browser/Pages/HomePage.php.stub' => base_path('tests/Browser/Pages/HomePage.php'),
+                __DIR__.'/../Commands/stubs/tests/Browser/HomePageTest.php.stub' => base_path('tests/Browser/HomePageTest.php'),
+                __DIR__.'/../Commands/stubs/tests/Feature/HomePageTest.php.stub' => base_path('tests/Feature/HomePageTest.php'),
+                __DIR__.'/../Commands/stubs/tests/Unit/ExampleTest.php.stub' => base_path('tests/Unit/ExampleTest.php'),
                 __DIR__.'/../Commands/stubs/tests/Pest.php.stub' => base_path('tests/Pest.php'),
                 __DIR__.'/../Commands/stubs/phpunit.xml.stub' => base_path('phpunit.xml'),
-                __DIR__.'/../Commands/stubs/.env.dusk' => base_path('.env.dusk'),
+                __DIR__.'/../Commands/stubs/.env.dusk.stub' => base_path('.env.dusk'),
             ],
 
             'common' => [

@@ -1,0 +1,9 @@
+<?php
+
+declare(strict_types=1);
+
+//beforeEach(fn () => Artisan::call('db:seed'));
+
+it('ensures home page is available', function () {
+    $this->get('/')->assertSuccessful();
+});
