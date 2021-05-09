@@ -2,6 +2,10 @@
 
 All notable changes to `toolbox` will be documented in this file.
 
+## 2.1.1 - 2021-05-09
+
+- fix test stubs
+
 ## 2.1.0 - 2021-05-08
 
 - add --test-suites option to toolbox:install command
