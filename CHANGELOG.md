@@ -2,6 +2,10 @@
 
 All notable changes to `toolbox` will be documented in this file.
 
+## 2.2.0 - 2021-08-24
+
+- add pestphp/pest-plugin-parallel
+
 ## 2.1.1 - 2021-05-09
 
 - fix test stubs
