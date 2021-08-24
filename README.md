@@ -65,6 +65,7 @@ Add those scripts to your `composer.json`:
     "rector": "./vendor/bin/rector process",
     "format": "./vendor/bin/php-cs-fixer fix --allow-risky=yes",
     "test": "./vendor/bin/pest --coverage --min=100 --coverage-html=.coverage --coverage-clover=coverage.xml"
+    "paratest": "./vendor/bin/pest --parallel --coverage --min=100 --coverage-html=.coverage --coverage-clover=coverage.xml"
 }
 ```
 
