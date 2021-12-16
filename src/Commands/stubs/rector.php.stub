@@ -16,37 +16,41 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 //        __DIR__.'/tests',
     ]);
     $parameters->set(Option::SKIP, [
-        __DIR__.'/app/Nova',
-//        __DIR__.'/app/Actions/Fortify',
+        __DIR__.'/app/Exceptions',
+        __DIR__.'/app/Providers',
+//        __DIR__.'/app/Nova',
 //        __DIR__.'/app/Actions/Jetstream',
+//        __DIR__.'/app/Actions/Fortify',
+//        __DIR__.'/app/Http/Livewire',
     ]);
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
     $parameters->set(Option::IMPORT_SHORT_CLASSES, false);
     $parameters->set(Option::IMPORT_DOC_BLOCKS, false);
     $parameters->set(Option::ENABLE_CACHE, true);
 
-    if (file_exists(getcwd().'/phpstan.neon')) {
-        $parameters->set(Option::PHPSTAN_FOR_RECTOR_PATH, getcwd().'/phpstan.neon');
+    if (file_exists($neon = getcwd().'/phpstan.neon')) {
+        $parameters->set(Option::PHPSTAN_FOR_RECTOR_PATH, $neon);
     }
 
     $parameters->set(Option::SETS, [
         SetList::CARBON_2,
         SetList::CODE_QUALITY,
         SetList::EARLY_RETURN,
+        LaravelSetList::ARRAY_STR_FUNCTIONS_TO_STATIC_CALL,
         LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
         LaravelSetList::LARAVEL_CODE_QUALITY,
-        SetList::NAMING,
+//        SetList::NAMING,
         SetList::ORDER,
         SetList::PHP_74,
         SetList::PSR_4,
         SetList::SAFE_07,
-        SetList::TYPE_DECLARATION,
+//        SetList::TYPE_DECLARATION,
         SetList::PRIVATIZATION,
     ]);
 
-    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_CODE_QUALITY);
-    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_90);
-    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_91);
+//    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_CODE_QUALITY);
+//    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_90);
+//    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_91);
 
     $services = $containerConfigurator->services();
 
@@ -99,6 +103,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(\Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector::class);
     $services->set(\Rector\DeadCode\Rector\Assign\RemoveUnusedAssignVariableRector::class);
     $services->set(\Rector\DeadCode\Rector\Ternary\TernaryToBooleanOrFalseToBooleanAndRector::class);
+
+    // Naming
+//    $services->set(\Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector::class);
+//    $services->set(\Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector::class);
+    $services->set(\Rector\Naming\Rector\ClassMethod\RenameVariableToMatchNewTypeRector::class);
+    $services->set(\Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector::class);
+    $services->set(\Rector\Naming\Rector\ClassMethod\MakeIsserClassMethodNameStartWithIsRector::class);
+    $services->set(\Rector\Naming\Rector\Foreach_\RenameForeachValueVariableToMatchMethodCallReturnTypeRector::class);
+    $services->set(\Rector\Naming\Rector\Property\MakeBoolPropertyRespectIsHasWasMethodNamingRector::class);
+    $services->set(\Rector\Naming\Rector\Foreach_\RenameForeachValueVariableToMatchExprVariableRector::class);
 
     // Php70
     // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#php70
@@ -158,6 +172,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'pg_setclientencoding' => 'pg_set_client_encoding',
             ],
         ]]);
+
+    // Type Declaration
+    $services->set(\Rector\TypeDeclaration\Rector\FunctionLike\ParamTypeDeclarationRector::class);
+    $services->set(\Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector::class);
+    $services->set(\Rector\TypeDeclaration\Rector\Property\PropertyTypeDeclarationRector::class);
+    $services->set(\Rector\TypeDeclaration\Rector\Closure\AddClosureReturnTypeRector::class);
 
     // Restoration
     // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#restoration
