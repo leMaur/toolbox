@@ -1,12 +1,14 @@
 parameters:
     level: 8
     checkMissingIterableValueType: false
+    checkOctaneCompatibility: false
+
     paths:
         - app
+
     excludePaths:
         - app/Nova/*
-    includes:
-        - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+
     ignoreErrors:
         - '#is not allowed to extend.#'
         - '#Dynamic call to static method.#'
