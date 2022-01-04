@@ -3,183 +3,64 @@
 declare(strict_types=1);
 
 use Rector\Core\Configuration\Option;
+use Rector\Core\ValueObject\PhpVersion;
 use Rector\Laravel\Set\LaravelSetList;
-use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
+    $services = $containerConfigurator->services();
+    $dir = getcwd();
 
     $parameters->set(Option::PATHS, [
-        __DIR__.'/app',
-//        __DIR__.'/tests',
+        $dir.'/app',
     ]);
+
     $parameters->set(Option::SKIP, [
-        __DIR__.'/app/Exceptions',
-        __DIR__.'/app/Providers',
-//        __DIR__.'/app/Nova',
-//        __DIR__.'/app/Actions/Jetstream',
-//        __DIR__.'/app/Actions/Fortify',
-//        __DIR__.'/app/Http/Livewire',
+        //
     ]);
+
+    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_81);
+
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
     $parameters->set(Option::IMPORT_SHORT_CLASSES, false);
     $parameters->set(Option::IMPORT_DOC_BLOCKS, false);
-    $parameters->set(Option::ENABLE_CACHE, true);
 
-    if (file_exists($neon = getcwd().'/phpstan.neon')) {
+    if (file_exists($neon = $dir.'/phpstan.neon')) {
         $parameters->set(Option::PHPSTAN_FOR_RECTOR_PATH, $neon);
     }
 
-    $parameters->set(Option::SETS, [
-        SetList::CARBON_2,
-        SetList::CODE_QUALITY,
-        SetList::EARLY_RETURN,
-        LaravelSetList::ARRAY_STR_FUNCTIONS_TO_STATIC_CALL,
-        LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
-        LaravelSetList::LARAVEL_CODE_QUALITY,
-//        SetList::NAMING,
-        SetList::ORDER,
-        SetList::PHP_74,
-        SetList::PSR_4,
-        SetList::SAFE_07,
-//        SetList::TYPE_DECLARATION,
-        SetList::PRIVATIZATION,
-    ]);
+    $containerConfigurator->import(SetList::PHP_71);
+    $containerConfigurator->import(SetList::PHP_72);
+    $containerConfigurator->import(SetList::PHP_73);
+    $containerConfigurator->import(SetList::PHP_74);
+    $containerConfigurator->import(SetList::PHP_80);
+    $containerConfigurator->import(SetList::PHP_81);
+    $services->remove(\Rector\Php81\Rector\ClassMethod\NewInInitializerRector::class);
 
-//    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_CODE_QUALITY);
-//    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_90);
-//    $containerConfigurator->import(PHPUnitSetList::PHPUNIT_91);
+    $containerConfigurator->import(SetList::CODE_QUALITY);
+    $services->remove(\Rector\CodeQuality\Rector\If_\ConsecutiveNullCompareReturnsToNullCoalesceQueueRector::class);
 
-    $services = $containerConfigurator->services();
+    $containerConfigurator->import(SetList::PRIVATIZATION);
+    $services->remove(\Rector\Privatization\Rector\Class_\RepeatedLiteralToClassConstantRector::class);
+    $services->remove(\Rector\Privatization\Rector\Property\ChangeReadOnlyPropertyWithDefaultValueToConstantRector::class);
+    $services->remove(\Rector\Privatization\Rector\Class_\ChangeReadOnlyVariableWithDefaultValueToConstantRector::class);
 
-    // Coding Style
-    // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#codingstyle
-    $services->set(\Rector\CodingStyle\Rector\If_\NullableCompareToNullRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Switch_\BinarySwitchToIfElseRector::class);
-    $services->set(\Rector\CodingStyle\Rector\FuncCall\ConsistentImplodeRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Ternary\TernaryConditionVariableAssignmentRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Use_\RemoveUnusedAliasRector::class);
-    $services->set(\Rector\CodingStyle\Rector\String_\SymplifyQuoteEscapeRector::class);
-    $services->set(\Rector\CodingStyle\Rector\ClassConst\SplitGroupedConstantsAndPropertiesRector::class);
-    $services->set(\Rector\CodingStyle\Rector\String_\SplitStringClassConstantToClassConstFetchRector::class);
-    $services->set(\Rector\Php55\Rector\String_\StringClassNameToClassConstantRector::class);
-    $services->set(\Rector\CodingStyle\Rector\FuncCall\ConsistentPregDelimiterRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Include_\FollowRequireByDirRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Plus\UseIncrementAssignRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector::class);
-    $services->set(\Rector\CodingStyle\Rector\ClassConst\VarConstantCommentRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector::class);
-    $services->set(\Rector\CodingStyle\Rector\ClassMethod\NewlineBeforeNewAssignSetRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Assign\ManualJsonStringToJsonEncodeArrayRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Class_\AddArrayDefaultToArrayPropertyRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Property\AddFalseDefaultToBoolPropertyRector::class);
-    $services->set(\Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector::class);
-    $services->set(\Rector\CodingStyle\Rector\FuncCall\CallUserFuncCallToVariadicRector::class);
-    $services->set(\Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector::class);
-    $services->set(\Rector\CodingStyle\Rector\MethodCall\UseMessageVariableForSprintfInSymfonyStyleRector::class);
-    $services->set(\Rector\CodingStyle\Rector\Use_\SplitGroupedUseImportsRector::class);
-    $services->set(\Rector\CodingStyle\Rector\ClassMethod\RemoveDoubleUnderscoreInMethodNameRector::class);
-    $services->set(\Rector\CodingStyle\Rector\PostInc\PostIncDecToPreIncDecRector::class);
+    $containerConfigurator->import(SetList::TYPE_DECLARATION);
+    $containerConfigurator->import(SetList::TYPE_DECLARATION_STRICT);
+    $containerConfigurator->import(SetList::NAMING);
 
-    // Dead Code
-    // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#deadcode
-    $services->set(\Rector\DeadCode\Rector\Cast\RecastingRemovalRector::class);
-    $services->set(\Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector::class);
-    $services->set(\Rector\DeadCode\Rector\BooleanAnd\RemoveAndTrueRector::class);
-    $services->set(\Rector\DeadCode\Rector\Assign\RemoveAssignOfVoidReturnFunctionRector::class);
-    $services->set(\Rector\DeadCode\Rector\FunctionLike\RemoveCodeAfterReturnRector::class);
-    $services->set(\Rector\DeadCode\Rector\Concat\RemoveConcatAutocastRector::class);
-    $services->set(\Rector\DeadCode\Rector\Return_\RemoveDeadConditionAboveReturnRector::class);
-    $services->set(\Rector\DeadCode\Rector\ClassMethod\RemoveDeadConstructorRector::class);
-    $services->set(\Rector\DeadCode\Rector\FunctionLike\RemoveDeadReturnRector::class);
-    $services->set(\Rector\DeadCode\Rector\ClassMethod\RemoveDelegatingParentCallRector::class);
-    $services->set(\Rector\DeadCode\Rector\ClassMethod\RemoveEmptyClassMethodRector::class);
-    $services->set(\Rector\DeadCode\Rector\PropertyProperty\RemoveNullPropertyInitializationRector::class);
-    $services->set(\Rector\DeadCode\Rector\FunctionLike\RemoveOverriddenValuesRector::class);
-    $services->set(\Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector::class);
-    $services->set(\Rector\DeadCode\Rector\Assign\RemoveUnusedAssignVariableRector::class);
-    $services->set(\Rector\DeadCode\Rector\Ternary\TernaryToBooleanOrFalseToBooleanAndRector::class);
+    $containerConfigurator->import(SetList::EARLY_RETURN);
+    $containerConfigurator->import(SetList::CODING_STYLE);
+    $services->remove(\Rector\CodingStyle\Rector\ClassConst\VarConstantCommentRector::class);
 
-    // Naming
-//    $services->set(\Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector::class);
-//    $services->set(\Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector::class);
-    $services->set(\Rector\Naming\Rector\ClassMethod\RenameVariableToMatchNewTypeRector::class);
-    $services->set(\Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector::class);
-    $services->set(\Rector\Naming\Rector\ClassMethod\MakeIsserClassMethodNameStartWithIsRector::class);
-    $services->set(\Rector\Naming\Rector\Foreach_\RenameForeachValueVariableToMatchMethodCallReturnTypeRector::class);
-    $services->set(\Rector\Naming\Rector\Property\MakeBoolPropertyRespectIsHasWasMethodNamingRector::class);
-    $services->set(\Rector\Naming\Rector\Foreach_\RenameForeachValueVariableToMatchExprVariableRector::class);
+    $containerConfigurator->import(SetList::DEAD_CODE);
 
-    // Php70
-    // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#php70
-    $services->set(\Rector\Php70\Rector\Ternary\TernaryToNullCoalescingRector::class);
-    $services->set(\Rector\Php70\Rector\MethodCall\ThisCallOnStaticMethodToStaticCallRector::class);
-    $services->set(\Rector\Php70\Rector\Variable\WrapVariableVariableNameInCurlyBracesRector::class);
+    $containerConfigurator->import(LaravelSetList::LARAVEL_80);
+    $containerConfigurator->import(LaravelSetList::LARAVEL_CODE_QUALITY);
+    $containerConfigurator->import(LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL);
+//    $containerConfigurator->import(LaravelSetList::LARAVEL_STATIC_TO_INJECTION);
 
-    // Php73
-    // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#php73
-    $services->set(\Rector\Php73\Rector\String_\SensitiveHereNowDocRector::class);
-
-    // Php80
-    // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#php80
-    $services->set(\Rector\Php80\Rector\Class_\AnnotationToAttributeRector::class);
-    $services->set(\Rector\Php80\Rector\Switch_\ChangeSwitchToMatchRector::class);
-    $services->set(\Rector\Php80\Rector\FuncCall\ClassOnObjectRector::class);
-    $services->set(\Rector\Php80\Rector\ClassMethod\FinalPrivateToPrivateVisibilityRector::class);
-    $services->set(\Rector\Php80\Rector\Ternary\GetDebugTypeRector::class);
-    $services->set(\Rector\Php80\Rector\If_\NullsafeOperatorRector::class);
-    $services->set(\Rector\Php80\Rector\ClassMethod\OptionalParametersAfterRequiredRector::class);
-    $services->set(\Rector\Php80\Rector\Catch_\RemoveUnusedVariableInCatchRector::class);
-    $services->set(\Rector\Php80\Rector\ClassMethod\SetStateToStaticRector::class);
-    $services->set(\Rector\Php80\Rector\NotIdentical\StrContainsRector::class);
-    $services->set(\Rector\Php80\Rector\Identical\StrEndsWithRector::class);
-    $services->set(\Rector\Php80\Rector\Identical\StrStartsWithRector::class);
-    $services->set(\Rector\Php80\Rector\Class_\StringableForToStringRector::class);
-    $services->set(\Rector\Php80\Rector\FuncCall\TokenGetAllToObjectRector::class);
-    $services->set(\Rector\Php80\Rector\FunctionLike\UnionTypesRector::class);
-    // @see https://php.watch/versions/8.0/pgsql-aliases-deprecated
-    $services
-        ->set(\Rector\Renaming\Rector\FuncCall\RenameFunctionRector::class)
-        ->call('configure', [[
-            Rector\Renaming\Rector\FuncCall\RenameFunctionRector::OLD_FUNCTION_TO_NEW_FUNCTION => [
-                'pg_clientencoding' => 'pg_client_encoding',
-                'pg_cmdtuples' => 'pg_affected_rows',
-                'pg_errormessage' => 'pg_last_error',
-                'pg_fieldisnull' => 'pg_field_is_null',
-                'pg_fieldname' => 'pg_field_name',
-                'pg_fieldnum' => 'pg_field_num',
-                'pg_fieldprtlen' => 'pg_field_prtlen',
-                'pg_fieldsize' => 'pg_field_size',
-                'pg_fieldtype' => 'pg_field_type',
-                'pg_freeresult' => 'pg_free_result',
-                'pg_getlastoid' => 'pg_last_oid',
-                'pg_loclose' => 'pg_lo_close',
-                'pg_locreate' => 'pg_lo_create',
-                'pg_loexport' => 'pg_lo_export',
-                'pg_loimport' => 'pg_lo_import',
-                'pg_loopen' => 'pg_lo_open',
-                'pg_loread' => 'pg_lo_read',
-                'pg_loreadall' => 'pg_lo_read_all',
-                'pg_lounlink' => 'pg_lo_unlink',
-                'pg_lowrite' => 'pg_lo_write',
-                'pg_numfields' => 'pg_num_fields',
-                'pg_numrows' => 'pg_num_rows',
-                'pg_result' => 'pg_fetch_result',
-                'pg_setclientencoding' => 'pg_set_client_encoding',
-            ],
-        ]]);
-
-    // Type Declaration
-    $services->set(\Rector\TypeDeclaration\Rector\FunctionLike\ParamTypeDeclarationRector::class);
-    $services->set(\Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector::class);
-    $services->set(\Rector\TypeDeclaration\Rector\Property\PropertyTypeDeclarationRector::class);
-    $services->set(\Rector\TypeDeclaration\Rector\Closure\AddClosureReturnTypeRector::class);
-
-    // Restoration
-    // https://github.com/rectorphp/rector/blob/master/docs/rector_rules_overview.md#restoration
     $services->set(\Rector\Restoration\Rector\Property\MakeTypedPropertyNullableIfCheckedRector::class);
 };
