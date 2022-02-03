@@ -1,7 +1,7 @@
 # Tools for Artisan!
 
 Toolbox full of useful packages to keep your Laravel project compliant with your coding standards.   
-It provides a minimum configuration for help you to start with `static analysis`, `code styling` and `testing`.
+It provides a minimum configuration to help you start with `static analysis`, `code styling` and `testing`.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/lemaur/toolbox.svg?style=flat-square)](https://packagist.org/packages/lemaur/toolbox)
 [![Total Downloads](https://img.shields.io/packagist/dt/lemaur/toolbox.svg?style=flat-square)](https://packagist.org/packages/lemaur/toolbox)
@@ -56,7 +56,7 @@ Launch the installation:
 If you install this package in a fresh Laravel installation, you can simply run:
 
 ```bash
-php artisan toolbox:install --force
+php artisan toolbox:install
 ```
 
 ⬇️ configure only Pest and Dusk test suites. [Those files will be overwritten](/src/Commands/PublishCommand.php#L22).
@@ -64,7 +64,7 @@ php artisan toolbox:install --force
 php artisan toolbox:install --test-suites
 ```
 
-Otherwise, you can install only the group of files you may need without test suites:
+Otherwise, you can install only the group of files you need without test suites:
 
 ⬇️ will overwrite [phpstan.neon](/src/Commands/PublishCommand.php#L24).
 ```bash
