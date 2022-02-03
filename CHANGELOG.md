@@ -2,6 +2,22 @@
 
 All notable changes to `toolbox` will be documented in this file.
 
+## 3.0.0 - 2023-02-03
+
+- added laravel 9 support
+- added new packages: 
+    - barryvdh/laravel-ide-helper
+    - infection/infection
+    - roave/security-advisories
+- removed packages:
+    - fakerphp/faker
+    - jasonmccreary/laravel-test-assertions
+    - mheap/phpunit-github-actions-printer
+    - mockery/mockery
+    - orchestra/testbench
+    - nunomaduro/collision
+    - phpunit/phpunit
+
 ## 2.2.0 - 2021-08-24
 
 - add pestphp/pest-plugin-parallel
