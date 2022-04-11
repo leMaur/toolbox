@@ -2,7 +2,13 @@
 
 All notable changes to `toolbox` will be documented in this file.
 
-## 3.0.0 - 2023-02-03
+## 3.1.0 - 2022-04-11
+
+- use `infection/infection` -> `dev-master` branch
+- add `support` and `suggest` sections to composer.json
+- improve `Pest` configuration
+
+## 3.0.0 - 2022-02-03
 
 - added laravel 9 support
 - added new packages: 

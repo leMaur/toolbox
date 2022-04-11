@@ -12,9 +12,6 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
-        <testsuite name="Browser">
-            <directory suffix="Test.php">./tests/Browser</directory>
-        </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
@@ -23,10 +20,14 @@
         </include>
         <exclude>
             <!-- Framework Code -->
-             <!--<directory suffix=".php">./app/Actions/Fortify</directory>-->
-             <!--<directory suffix=".php">./app/Actions/Jetstream</directory>-->
-             <!--<directory suffix=".php">./app/Nova</directory>-->
-             <!--<file>./app/Console/Kernel.php</file>-->
+<!--             <directory suffix=".php">./app/Actions/Fortify</directory>-->
+<!--             <directory suffix=".php">./app/Actions/Jetstream</directory>-->
+<!--             <directory suffix=".php">./app/Nova</directory>-->
+<!--             <directory suffix=".php">./app/Providers</directory>-->
+<!--            <file>./app/Console/Kernel.php</file>-->
+<!--            <file>./app/Http/Middleware/Authenticate.php</file>-->
+<!--            <file>./app/Http/Middleware/RedirectIfAuthenticated.php</file>-->
+<!--            <file>./app/Http/Middleware/TrustHosts.php</file>-->
         </exclude>
     </coverage>
     <php>
