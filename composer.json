@@ -33,7 +33,7 @@
         "friendsofphp/php-cs-fixer": "^v3.0",
         "graham-campbell/analyzer": "^3.0",
         "illuminate/contracts": "^8.0|^9.0",
-        "infection/infection": "^0.26.4",
+        "infection/infection": "dev-master",
         "johnkary/phpunit-speedtrap": "^v4.0",
         "laravel/dusk": "^6.0",
         "nunomaduro/larastan": "^1.0|^2.0",
@@ -74,5 +74,12 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "support": {
+        "issues": "https://github.com/leMaur/toolbox/issues"
+    },
+    "suggest": {
+		"thecodingmachine/safe": "A set of core PHP functions rewritten to throw exceptions instead of returning false when an error is encountered.",
+        "thecodingmachine/phpstan-safe-rule": "PHPStan rule to help you detect unsafe function call and will propose you to use the thecodingmachine/safe variant instead."
+	}
 }
