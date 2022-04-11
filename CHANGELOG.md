@@ -2,11 +2,16 @@
 
 All notable changes to `toolbox` will be documented in this file.
 
-## 3.1.0 - 2022-04-11
+## 3.2.0 - 2022-04-11
 
-- use `infection/infection` -> `dev-master` branch
-- add `support` and `suggest` sections to composer.json
-- improve `Pest` configuration
+- use infection/infection -> dev-master branch
+- add support and suggest sections to composer.json
+- improve Pest configuration
+
+
+## 3.1.0 - 2022-03-04
+
+- updated .php-cs-fixer.php stub file. Now it uses rulesets @PSR12 and @PHP81Migration
 
 ## 3.0.0 - 2022-02-03
 
