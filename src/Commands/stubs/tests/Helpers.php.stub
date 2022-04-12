@@ -26,11 +26,6 @@ function actingAs(?Authenticatable $user = null): TestCase
     return test()->actingAs($user);
 }
 
-function actingAs(Authenticatable $user): TestCase
-{
-    return test()->actingAs($user);
-}
-
 function logout(): void
 {
     auth()->logout();
