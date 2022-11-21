@@ -13,14 +13,14 @@ declare(strict_types=1);
 |
 */
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Ramsey\Uuid\Uuid;
 use Tests\DuskTestCase;
 use Tests\TestCase;
 
 uses(TestCase::class)->in('Analysis');
-uses(TestCase::class, RefreshDatabase::class)->in('Feature');
-uses(DuskTestCase::class, RefreshDatabase::class)->group('e2e')->in('Browser');
+uses(TestCase::class, LazilyRefreshDatabase::class)->in('Feature');
+uses(DuskTestCase::class, LazilyRefreshDatabase::class)->group('e2e')->in('Browser');
 
 /*
 |--------------------------------------------------------------------------
