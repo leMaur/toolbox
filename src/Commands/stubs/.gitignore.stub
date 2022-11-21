@@ -4,10 +4,12 @@ node_modules/
 npm-debug.log
 yarn-error.log
 storage/*.key
+storage/debugbar
 Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+.vapor/
 
 # dotenv environment variable files
 .env
@@ -15,6 +17,8 @@ Homestead.json
 .env.test.local
 .env.production.local
 .env.local
+.env.production
+.env.staging
 
 ### Php Cs Fixer ###
 .php-cs-fixer.cache
@@ -212,3 +216,6 @@ atlassian-ide-plugin.xml
 # CodeStream plugin
 # https://plugins.jetbrains.com/plugin/12206-codestream
 .idea/codestream.xml
+
+# Fleet
+.fleet/
