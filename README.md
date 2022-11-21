@@ -1,27 +1,23 @@
 # Tools for Artisan!
 
-Toolbox full of useful packages to keep your Laravel project compliant with your coding standards.   
+Toolbox full of useful packages to keep your **Laravel** project compliant with your coding standards.   
 It provides a minimum configuration to help you start with `static analysis`, `code styling` and `testing`.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/lemaur/toolbox.svg?style=flat-square)](https://packagist.org/packages/lemaur/toolbox)
 [![Total Downloads](https://img.shields.io/packagist/dt/lemaur/toolbox.svg?style=flat-square)](https://packagist.org/packages/lemaur/toolbox)
 [![License](https://img.shields.io/packagist/l/lemaur/toolbox.svg?style=flat-square&color=yellow)](https://github.com/leMaur/toolbox/blob/master/LICENSE.md)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/lemaur/toolbox/Check%20&%20fix%20styling?label=code%20style&style=flat-square)](https://github.com/lemaur/toolbox/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amaster)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/lemaur?style=flat-square&color=ea4aaa)](https://github.com/sponsors/leMaur)
 [![Trees](https://img.shields.io/badge/dynamic/json?color=yellowgreen&style=flat-square&label=Trees&query=%24.total&url=https%3A%2F%2Fpublic.offset.earth%2Fusers%2Flemaur%2Ftrees)](https://ecologi.com/lemaur?r=6012e849de97da001ddfd6c9)
 
 ## What's Included
 - [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar)
 - [Laravel Ide Helper](https://github.com/barryvdh/laravel-ide-helper)
-- [Php Cs Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
 - [Analyzer](https://github.com/GrahamCampbell/Analyzer)
 - [Infection](https://github.com/infection/infection)
 - [Phpunit SpeedTrap](https://github.com/johnkary/phpunit-speedtrap)
 - [Laravel Dusk](https://github.com/laravel/dusk)
-- [Mockery](https://github.com/mockery/mockery)
-- [Collision](https://github.com/nunomaduro/collision)
+- [Laravel Sail](https://github.com/laravel/sail)
 - [Larastan](https://github.com/nunomaduro/larastan)
-- [Laravel Mojito](https://github.com/nunomaduro/laravel-mojito)
 - [Pest](https://pestphp.com)
 - [Phpunit](https://github.com/sebastianbergmann/phpunit)
 - [Rector](https://github.com/rectorphp/rector)
@@ -45,8 +41,13 @@ You can even choose 😃:
 ## Installation
 
 Install the package via composer:
+```bash
+composer require lemaur/toolbox --dev 
 ```
-composer require --dev lemaur/toolbox
+
+if you still using php8.0 you should use:
+```bash
+composer require "lemaur/toolbox:^3.2" --dev
 ```
 
 Launch the installation:
@@ -59,19 +60,19 @@ If you install this package in a fresh Laravel installation, you can simply run:
 php artisan toolbox:install
 ```
 
-⬇️ configure only Pest and Dusk test suites. [Those files will be overwritten](/src/Commands/PublishCommand.php#L22).
+⬇️ configure only Pest and Dusk test suites. [Those files will be overwritten](/src/Commands/PublishCommand.php#L42).
 ```bash
 php artisan toolbox:install --test-suites
 ```
 
 Otherwise, you can install only the group of files you need without test suites:
 
-⬇️ will overwrite [phpstan.neon](/src/Commands/PublishCommand.php#L24).
+⬇️ will overwrite [phpstan.neon](/src/Commands/PublishCommand.php#L23).
 ```bash
 php artisan toolbox:install --only="static-analysis"
 ```
 
-or you can specify multiple values, ⬇️ will overwrite [phpstan.neon](/src/Commands/PublishCommand.php#L24) and [.php-cs-fixer.php](/src/Commands/PublishCommand.php#L28).
+or you can specify multiple values, ⬇️ will overwrite [phpstan.neon](/src/Commands/PublishCommand.php#L23) and [pint.json](/src/Commands/PublishCommand.php#L27).
 ```bash
 php artisan toolbox:install --only="static-analysis" --only="code-style"
 ```
@@ -88,21 +89,23 @@ Available values for the `--only` option:
 Add those scripts to your `composer.json`:
 ```bash
 "scripts": {
-    "post-update-cmd": [
-        ...
-        "@php artisan clear-compiled",
+    "ide-helper": [
+        "@php artisan ide-helper:models --write-mixin --reset",
         "@php artisan ide-helper:generate",
+        "@php artisan ide-helper:eloquent",
         "@php artisan ide-helper:meta"
     ],
-    "models": "@php artisan ide-helper:models --write",
     "analyse": "./vendor/bin/phpstan analyse --memory-limit=2G",
-    "refactor": "./vendor/bin/rector process",
-    "format": "./vendor/bin/php-cs-fixer fix --allow-risky=yes",
+    "refactor": "./vendor/bin/rector process  --memory-limit=2G",
+    "format": "./vendor/bin/pint",
     "test": "./vendor/bin/pest --exclude-group=e2e",
     "test:fast": "./vendor/bin/pest --exclude-group=e2e --parallel",
-    "test:coverage": "./vendor/bin/pest --exclude-group=e2e --coverage --min=100 --coverage-html=.coverage --coverage-clover=coverage.xml",
+    "test:coverage": "./vendor/bin/pest --exclude-group=e2e --coverage --min=50 --coverage-html=.coverage --coverage-clover=coverage.xml",
     "test:e2e": "@php artisan pest:dusk",
-    "test:mutation": "XDEBUG_MODE=coverage ./vendor/bin/infection --test-framework=pest --show-mutations"
+    "test:mutation": [
+        "Composer\\Config::disableProcessTimeout",
+        "XDEBUG_MODE=coverage vendor/bin/infection --show-mutations --threads=4 --only-covering-test-cases --min-msi=25 --min-covered-msi=85 --test-framework=pest --test-framework-options='--configuration=phpunit.xml --exclude-group=e2e'"
+    ]
 }
 ```
 
@@ -112,16 +115,18 @@ Allow plugins to be executed by Composer, by putting these lines on `composer.js
     ...
     "allow-plugins": {
         "phpstan/extension-installer": true,
-        "pestphp/pest-plugin": true
+        "pestphp/pest-plugin": true,
+        "infection/extension-installer": true
     }
 }
 ```
 
 ## Available Commands 
 
-Generate PHPDoc on your models (helpful for static analysis) [for more info](https://github.com/barryvdh/laravel-ide-helper#automatic-phpdocs-for-models)
+Generate PHPDoc for your models and   
+other (helpful for your IDE and static analysis tools) [for more info](https://github.com/barryvdh/laravel-ide-helper#usage)
 ```bash
-composer models
+composer ide-helpers
 ```
 
 Run code refactoring [for more info](https://github.com/rectorphp/rector)
