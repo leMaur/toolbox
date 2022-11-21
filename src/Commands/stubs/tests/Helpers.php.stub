@@ -20,7 +20,7 @@ use Tests\TestCase;
 function actingAs(?Authenticatable $user = null): TestCase
 {
     if ($user === null) {
-        $user = User::factory()->withUuid()->create();
+        $user = User::factory()->create();
     }
 
     return test()->actingAs($user);
@@ -38,12 +38,12 @@ function logout(): void
 function fixture(string $name): array
 {
     $file = file_get_contents(
-        filename: base_path("tests/Fixtures/$name.json"),
+        filename: base_path("tests/Fixtures/$name"),
     );
 
     if (! $file) {
         throw new InvalidArgumentException(
-            message: "Cannot find fixture: [$name] at tests/Fixtures/$name.json",
+            message: "Cannot find fixture: [$name] at tests/Fixtures/$name",
         );
     }
 

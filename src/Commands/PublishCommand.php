@@ -25,7 +25,7 @@ class PublishCommand extends Command
             ],
 
             'code-style' => [
-                __DIR__.'/../Commands/stubs/.php-cs-fixer.php.stub' => base_path('.php-cs-fixer.php'),
+                __DIR__.'/../Commands/stubs/pint.json.stub' => base_path('pint.json'),
             ],
 
             'refactor' => [
@@ -36,7 +36,7 @@ class PublishCommand extends Command
             'common' => [
                 __DIR__.'/../Commands/stubs/.editorconfig.stub' => base_path('.editorconfig'),
                 __DIR__.'/../Commands/stubs/.gitignore.stub' => base_path('.gitignore'),
-                __DIR__.'/../Commands/stubs/infection.json.stub' => base_path('infection.json'),
+                __DIR__.'/../Commands/stubs/config/ide-helper.php.stub' => base_path('config/ide-helper.php'),
             ],
 
             'tests' => [
@@ -49,6 +49,7 @@ class PublishCommand extends Command
                 __DIR__.'/../Commands/stubs/tests/Pest.php.stub' => base_path('tests/Pest.php'),
                 __DIR__.'/../Commands/stubs/phpunit.xml.stub' => base_path('phpunit.xml'),
                 __DIR__.'/../Commands/stubs/.env.dusk.stub' => base_path('.env.dusk'),
+                __DIR__.'/../Commands/stubs/infection.json.stub' => base_path('infection.json'),
             ],
 
         ];
@@ -69,18 +70,18 @@ class PublishCommand extends Command
             $this->call('dusk:install', ['--quiet' => true, '--no-interaction' => true]);
             $this->info("Successfully installed Dusk test suite.");
 
-            $this->line("");
-            $this->line("You can now delete Example tests and tests/Unit folder with its content.");
+            $this->newLine();
+            $this->line("You can delete Example tests...");
 
             $this->copy($filesystem, ['tests']);
 
-            return 0;
+            return self::SUCCESS;
         }
 
         if ($this->option('only')) {
             $this->copy($filesystem, $this->option('only'));
 
-            return 0;
+            return self::SUCCESS;
         }
 
         $this->call('pest:install', ['--quiet' => true, '--no-interaction' => true]);
@@ -91,10 +92,10 @@ class PublishCommand extends Command
 
         $this->copy($filesystem, collect($this->files())->keys()->except('tests')->toArray());
 
-        $this->line("");
-        $this->line("You can now delete Example tests and tests/Unit folder with its content.");
+        $this->newLine();
+        $this->line("You can now delete Example tests...");
 
-        return 0;
+        return self::SUCCESS;
     }
 
     private function copy(Filesystem $filesystem, array $keys): void
@@ -106,22 +107,22 @@ class PublishCommand extends Command
 
     private function copyFiles(Filesystem $filesystem, array $files, string $group): int
     {
-        collect($files)->each(function ($toPublish, $original) use ($filesystem) {
-            if ($this->option('safe') && $filesystem->exists($toPublish)) {
-                $this->error("The file [$toPublish] already exists.");
+        collect($files)->each(function ($destination, $original) use ($filesystem) {
+            if ($this->option('safe') && $filesystem->exists($destination)) {
+                $this->error("The file [{$destination}] already exists.");
 
-                return 1;
+                return self::FAILURE;
             }
 
-            $path = Str::beforeLast($toPublish, '/');
+            $path = Str::beforeLast($destination, '/');
             $filesystem->ensureDirectoryExists($path);
-            $filesystem->copy($original, $toPublish);
+            $filesystem->copy($original, $destination);
 
-            $this->info("Successfully published $toPublish.");
+            $this->info("Successfully published {$destination}.");
         });
 
-        $this->info("Successfully published all files for [$group] group.");
+        $this->info("Successfully published all files for [{$group}] group.");
 
-        return 0;
+        return self::SUCCESS;
     }
 }

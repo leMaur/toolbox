@@ -26,41 +26,36 @@
         }
     ],
     "require": {
-        "php": "^8.0",
-        "barryvdh/laravel-debugbar": "^3.0",
-        "barryvdh/laravel-ide-helper": "^2.0",
+        "php": "^8.1",
+        "barryvdh/laravel-debugbar": "^3.7",
+        "barryvdh/laravel-ide-helper": "^2.12",
+        "brianium/paratest": "^6.6",
+        "fakerphp/faker": "^1.9.1",
         "ergebnis/phpstan-rules": "^1.0",
-        "friendsofphp/php-cs-fixer": "^v3.0",
-        "graham-campbell/analyzer": "^3.0",
+        "graham-campbell/analyzer": "^3.1",
         "illuminate/contracts": "^8.0|^9.0",
         "infection/infection": "dev-master",
         "johnkary/phpunit-speedtrap": "^v4.0",
-        "laravel/dusk": "^6.0",
-        "nunomaduro/larastan": "^1.0|^2.0",
-        "nunomaduro/laravel-mojito": "^0.2.8",
-        "pestphp/pest": "^1.0",
+        "laravel/dusk": "^7.0",
+        "laravel/sail": "^1.16",
+        "nunomaduro/larastan": "^2.2",
+        "pestphp/pest": "^1.22",
         "pestphp/pest-plugin-faker": "^1.0",
-        "pestphp/pest-plugin-laravel": "^1.0",
+        "pestphp/pest-plugin-laravel": "^1.3",
         "pestphp/pest-plugin-mock": "^1.0",
-        "pestphp/pest-plugin-parallel": "^v1.0",
-        "phpstan/extension-installer": "^1.1",
+        "pestphp/pest-plugin-parallel": "^v1.2",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-strict-rules": "^1.0",
-        "rector/rector": "^0.12",
+        "rector/rector": "^0.14.7",
         "roave/security-advisories": "dev-latest",
         "spatie/laravel-package-tools": "^1.4.3",
         "spatie/laravel-ray": "^1.0",
-        "spatie/pest-plugin-snapshots": "^1.0",
-        "spatie/pest-plugin-test-time": "^1.0"
+        "spatie/pest-plugin-snapshots": "^1.1",
+        "spatie/pest-plugin-test-time": "^1.1"
     },
     "autoload": {
         "psr-4": {
             "Lemaur\\Toolbox\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Lemaur\\Toolbox\\Tests\\": "tests"
         }
     },
     "config": {

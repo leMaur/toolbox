@@ -2,25 +2,50 @@
 
 All notable changes to `toolbox` will be documented in this file.
 
+## 4.0.0 - 2022-11-21
+
+### Added
+- add ide-helper custom configuration file
+- add Laravel Pint custom configuration
+
+### Changed
+- change required minimum PHP version to ^8.1
+- update .gitignore stub
+- update rector configuration file
+- update php-stan configuration file
+- update test helpers
+- update Pest configuration
+
+### Removed
+- remove friendsofphp/php-cs-fixer
+- remove nunomaduro/laravel-mojito
+- remove phpstan/extension-installer
+
+
+## 3.2.1 - 2022-04-12
+
+- remove double helper function `actingAs()`
+
+
 ## 3.2.0 - 2022-04-11
 
 - use infection/infection -> dev-master branch
 - add support and suggest sections to composer.json
-- improve Pest configuration
+- update Pest configuration
 
 
 ## 3.1.0 - 2022-03-04
 
-- updated .php-cs-fixer.php stub file. Now it uses rulesets @PSR12 and @PHP81Migration
+- update .php-cs-fixer.php stub file. Now it uses rulesets @PSR12 and @PHP81Migration
 
 ## 3.0.0 - 2022-02-03
 
-- added laravel 9 support
-- added new packages: 
+- add laravel 9 support
+- add new packages: 
     - barryvdh/laravel-ide-helper
     - infection/infection
     - roave/security-advisories
-- removed packages:
+- remove packages:
     - fakerphp/faker
     - jasonmccreary/laravel-test-assertions
     - mheap/phpunit-github-actions-printer
