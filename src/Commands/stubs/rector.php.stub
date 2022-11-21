@@ -2,54 +2,98 @@
 
 declare(strict_types=1);
 
-use Rector\Core\Configuration\Option;
-use Rector\Laravel\Set\LaravelSetList;
+use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
+use Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector;
+use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
+use Rector\CodingStyle\Rector\ClassConst\VarConstantCommentRector;
+use Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector;
+use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
+use Rector\CodingStyle\Rector\FuncCall\ConsistentPregDelimiterRector;
+use Rector\CodingStyle\Rector\PostInc\PostIncDecToPreIncDecRector;
+use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
+use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
+use Rector\Privatization\Rector\Class_\ChangeReadOnlyVariableWithDefaultValueToConstantRector;
+use Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector;
+use Rector\Privatization\Rector\Property\ChangeReadOnlyPropertyWithDefaultValueToConstantRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
+return static function (RectorConfig $rectorConfig): void {
     $dir = getcwd();
 
-    $parameters = $containerConfigurator->parameters();
-    $services = $containerConfigurator->services();
-
-    $parameters->set(Option::BOOTSTRAP_FILES, [
-        $dir.'/rector-bootstrap.php',
-    ]);
-
-    $parameters->set(Option::PATHS, [
+    $rectorConfig->paths([
         $dir.'/app',
     ]);
 
-    $parameters->set(Option::SKIP, [
-        $dir.'/app/Http/Livewire',
+    $rectorConfig->skip([
+        $dir.'/app/Http/Middleware/*',
+        $dir.'/app/Providers/*',
     ]);
 
-    if (file_exists($neon = $dir.'/phpstan.neon')) {
-        $parameters->set(Option::PHPSTAN_FOR_RECTOR_PATH, $neon);
-    }
+    /**
+     * In particular cases, you can get some errors and most of the time
+     * you can fix them by using a custom bootstrap file.
+     *
+     * You can do so by uncomment the lines below...
+     */
 
-    $parameters->set(Option::AUTO_IMPORT_NAMES, true);
-    $parameters->set(Option::IMPORT_SHORT_CLASSES, true);
-    $parameters->set(Option::IMPORT_DOC_BLOCKS, false);
+//    $rectorConfig->bootstrapFiles([
+//        $dir.'/rector-bootstrap.php',
+//    ]);
 
-    $containerConfigurator->import(LevelSetList::UP_TO_PHP_81);
 
-    $containerConfigurator->import(SetList::PRIVATIZATION);
-    $services->remove(\Rector\Privatization\Rector\Class_\RepeatedLiteralToClassConstantRector::class);
-    $services->remove(\Rector\Privatization\Rector\Property\ChangeReadOnlyPropertyWithDefaultValueToConstantRector::class);
-    $services->remove(\Rector\Privatization\Rector\Class_\ChangeReadOnlyVariableWithDefaultValueToConstantRector::class);
+    /**
+     * Using `phpstan` configuration can slow down the execution
+     * and/or producing some nasty errors.
+     *
+     * You can try it by uncomment the line below...
+     */
 
-    $containerConfigurator->import(SetList::EARLY_RETURN);
+//    $rectorConfig->phpstanConfig($dir.'/phpstan.neon');
 
-    $containerConfigurator->import(SetList::CODING_STYLE);
-    $services->remove(\Rector\CodingStyle\Rector\ClassConst\VarConstantCommentRector::class);
-    $services->remove(\Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector::class);
-    $services->remove(\Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector::class);
-    $services->remove(\Rector\CodingStyle\Rector\FuncCall\ConsistentPregDelimiterRector::class);
 
-    $containerConfigurator->import(LaravelSetList::LARAVEL_80);
-    $containerConfigurator->import(LaravelSetList::LARAVEL_CODE_QUALITY);
-    $containerConfigurator->import(LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL);
+    /**
+     * Using parallel when running with docker can slow down
+     * the execution. In this case, you may want to disable it.
+     */
+
+//    $rectorConfig->disableParallel();
+    $rectorConfig->parallel();
+
+    $rectorConfig->importNames();
+    $rectorConfig->importShortClasses();
+
+    $rectorConfig->sets([
+        LevelSetList::UP_TO_PHP_81,
+        SetList::PRIVATIZATION,
+        SetList::EARLY_RETURN,
+        SetList::CODING_STYLE,
+        SetList::CODE_QUALITY,
+        SetList::DEAD_CODE,
+        SetList::TYPE_DECLARATION_STRICT,
+    ]);
+
+    $rectorConfig->services()
+
+        /* remove unwanted rules from PRIVATIZATION */
+        ->remove(ChangeReadOnlyPropertyWithDefaultValueToConstantRector::class)
+        ->remove(ChangeReadOnlyVariableWithDefaultValueToConstantRector::class)
+        ->remove(PrivatizeFinalClassMethodRector::class)
+
+        /* remove unwanted rules from CODING STYLE */
+        ->remove(VarConstantCommentRector::class)
+        ->remove(UnSpreadOperatorRector::class)
+        ->remove(EncapsedStringsToSprintfRector::class)
+        ->remove(ConsistentPregDelimiterRector::class)
+        ->remove(CatchExceptionNameMatchingTypeRector::class)
+        ->remove(PostIncDecToPreIncDecRector::class)
+
+        /* remove unwanted rules from CODE QUALITY */
+        ->remove(SimplifyBoolIdenticalTrueRector::class)
+        ->remove(FlipTypeControlToUseExclusiveTypeRector::class)
+        ->remove(ReadOnlyPropertyRector::class) // <- it adds `readonly` on writable properties
+
+        /* remove unwanted rules from DEAD CODE (it doesn't respect contracts) */
+        ->remove(RemoveUnusedConstructorParamRector::class);
 };

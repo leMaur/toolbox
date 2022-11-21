@@ -1,24 +1,40 @@
+##
+# As you can see in the file, I provided a sensible default.
+# Feel free to use it as is or uncomment, comment or remove the part you want/don't want.
+##
+
+includes:
+#    for info: https://github.com/phpstan/phpstan-deprecation-rules#rules-for-detecting-usage-of-deprecated-classes-methods-properties-constants-and-traits
+#    - ./vendor/phpstan/phpstan-deprecation-rules/rules.neon
+
+#    for info: https://github.com/phpstan/phpstan-strict-rules#extra-strict-and-opinionated-rules-for-phpstan
+#    - ./vendor/phpstan/phpstan-strict-rules/rules.neon
+
+#    for info: https://github.com/ergebnis/phpstan-rules#rules
+#    - ./vendor/ergebnis/phpstan-rules/rules.neon
+
+    - ./vendor/nunomaduro/larastan/extension.neon
+
 parameters:
 
-    # The level 9 is the highest level
-    level: 8
+    level: 9
 
+    checkGenericClassInNonGenericObjectType: false
+    reportMaybesInPropertyPhpDocTypes: false
     checkMissingIterableValueType: false
-    checkOctaneCompatibility: false
+    checkOctaneCompatibility: true
+
+    scanFiles:
+        - _ide_helper_models.php
 
     paths:
         - app
 
     excludePaths:
-#        - app/Nova/*
-#        - app/Http/Livewire/*
+        - app/Http/Middleware/RedirectIfAuthenticated.php
+        - app/Providers/AppServiceProvider.php
+        - app/Providers/AuthServiceProvider.php
+        - app/Providers/FortifyServiceProvider.php
 
     ignoreErrors:
-#        - '#is not allowed to extend.#'
-#        - '#Dynamic call to static method.#'
-#        - '#has a nullable return type declaration.#'
-#        - '#has parameter \$[a-zA-Z]+ with default value.#'
-#        - '#has parameter \$[a-zA-Z]+ with null as default value.#'
-#        - '#has parameter \$[a-zA-Z]+ with a nullable type declaration.#'
-#        - '#Parameter \#[0-9] \$column of method Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>\:\:whereIn\(\) expects string, Illuminate\\Database\\Query\\Expression given.#'
-#        - '#is protected, but since the containing class is final, it can be private.#'
+#        - '#Cannot cast mixed to ([\w]+).#'
