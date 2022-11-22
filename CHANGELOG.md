@@ -2,6 +2,20 @@
 
 All notable changes to `toolbox` will be documented in this file.
 
+## 4.1.0 - 2022-11-22
+
+### Added
+- add driftingly/rector-laravel and update rector configuration file
+- add schedule run on PHPMD workflow
+
+### Changed
+- change .editorconfig file
+- change `allow-plugins` section on composer.json
+
+### Removed
+- remove laravel/sail (it is always required in a fresh new Laravel installation)
+
+
 ## 4.0.0 - 2022-11-21
 
 ### Added
