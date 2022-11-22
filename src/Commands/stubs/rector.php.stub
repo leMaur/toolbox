@@ -18,6 +18,7 @@ use Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector;
 use Rector\Privatization\Rector\Property\ChangeReadOnlyPropertyWithDefaultValueToConstantRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use RectorLaravel\Set\LaravelLevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
     $dir = getcwd();
@@ -72,6 +73,7 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::CODE_QUALITY,
         SetList::DEAD_CODE,
         SetList::TYPE_DECLARATION_STRICT,
+        LaravelLevelSetList::UP_TO_LARAVEL_90,
     ]);
 
     $rectorConfig->services()
