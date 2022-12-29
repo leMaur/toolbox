@@ -74,6 +74,9 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::DEAD_CODE,
         SetList::TYPE_DECLARATION_STRICT,
         LaravelLevelSetList::UP_TO_LARAVEL_90,
+//      Be sure to have "thecodingmachine/safe" package installed before using this set!!
+//      👉🏻for info: https://github.com/thecodingmachine/safe#installation or run "composer require thecodingmachine/safe"
+//        $dir.'/vendor/thecodingmachine/safe/rector-migrate.php',
     ]);
 
     $rectorConfig->services()
