@@ -4,14 +4,18 @@
 ##
 
 includes:
-#    for info: https://github.com/phpstan/phpstan-deprecation-rules#rules-for-detecting-usage-of-deprecated-classes-methods-properties-constants-and-traits
-#    - ./vendor/phpstan/phpstan-deprecation-rules/rules.neon
+#    👉🏻for info: https://github.com/phpstan/phpstan-deprecation-rules#rules-for-detecting-usage-of-deprecated-classes-methods-properties-constants-and-traits
+    - ./vendor/phpstan/phpstan-deprecation-rules/rules.neon
 
-#    for info: https://github.com/phpstan/phpstan-strict-rules#extra-strict-and-opinionated-rules-for-phpstan
-#    - ./vendor/phpstan/phpstan-strict-rules/rules.neon
+#    👉🏻for info: https://github.com/phpstan/phpstan-strict-rules#extra-strict-and-opinionated-rules-for-phpstan
+    - ./vendor/phpstan/phpstan-strict-rules/rules.neon
 
-#    for info: https://github.com/ergebnis/phpstan-rules#rules
+#    👉🏻for info: https://github.com/ergebnis/phpstan-rules#rules
 #    - ./vendor/ergebnis/phpstan-rules/rules.neon
+
+#    Be sure to have "thecodingmachine/safe" package installed before using this rule!!
+#    👉🏻for info: https://github.com/thecodingmachine/safe#installation or run "composer require thecodingmachine/safe"
+#    - ./vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
 
     - ./vendor/nunomaduro/larastan/extension.neon
 
@@ -31,10 +35,21 @@ parameters:
         - app
 
     excludePaths:
-        - app/Http/Middleware/RedirectIfAuthenticated.php
-        - app/Providers/AppServiceProvider.php
-        - app/Providers/AuthServiceProvider.php
-        - app/Providers/FortifyServiceProvider.php
+#        - app/Http/Middleware/RedirectIfAuthenticated.php
 
     ignoreErrors:
 #        - '#Cannot cast mixed to ([\w]+).#'
+
+    strictRules:
+        disallowedLooseComparison: true
+        booleansInConditions: true
+        uselessCast: true
+        requireParentConstructorCall: true
+        disallowedConstructs: false
+        overwriteVariablesWithLoop: true
+        closureUsesThis: true
+        matchingInheritedMethodNames: true
+        numericOperandsInArithmeticOperators: true
+        strictCalls: true
+        switchConditionsMatchingType: true
+        noVariableVariables: true
