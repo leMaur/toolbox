@@ -18,6 +18,7 @@ use Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector;
 use Rector\Privatization\Rector\Property\ChangeReadOnlyPropertyWithDefaultValueToConstantRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\TypeDeclaration\Rector\ArrowFunction\AddArrowFunctionReturnTypeRector;
 use RectorLaravel\Set\LaravelLevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -100,5 +101,8 @@ return static function (RectorConfig $rectorConfig): void {
         ->remove(ReadOnlyPropertyRector::class) // <- it adds `readonly` on writable properties
 
         /* remove unwanted rules from DEAD CODE (it doesn't respect contracts) */
-        ->remove(RemoveUnusedConstructorParamRector::class);
+        ->remove(RemoveUnusedConstructorParamRector::class)
+
+        /* remove unwanted rules from TYPE_DECLARATION */
+        ->remove(AddArrowFunctionReturnTypeRector::class); // <- it adds `void` return type
 };
