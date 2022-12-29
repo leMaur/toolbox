@@ -2,6 +2,19 @@
 
 All notable changes to `toolbox` will be documented in this file.
 
+## 4.2.0 - 2022-12-29
+
+### Added
+- add `thecodingmachine/phpstan-safe-rule` composer package
+- add `phpstan-safe-rule` to phpstan.neon.stub
+- add `thecodingmachine/safe/rector-migrate` to rector.php.stub
+
+### Changed
+- rename deprecated set `TYPE_DECLARATION_STRICT` to `TYPE_DECLARATION` on rector.php.stub
+- temporarily disable `AddArrowFunctionReturnTypeRector` on rector.php.stub
+- fix PhpMD badge in README.md
+
+
 ## 4.1.0 - 2022-11-22
 
 ### Added
