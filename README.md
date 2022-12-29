@@ -6,7 +6,7 @@ It provides a minimum configuration to help you start with `static analysis`, `c
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/lemaur/toolbox.svg?style=flat-square)](https://packagist.org/packages/lemaur/toolbox)
 [![Total Downloads](https://img.shields.io/packagist/dt/lemaur/toolbox.svg?style=flat-square)](https://packagist.org/packages/lemaur/toolbox)
 [![License](https://img.shields.io/packagist/l/lemaur/toolbox.svg?style=flat-square&color=yellow)](https://github.com/leMaur/toolbox/blob/master/LICENSE.md)
-[![GitHub PHPMD Action Status](https://img.shields.io/github/workflow/status/lemaur/toolbox/PHPMD?label=PHPMD&style=flat-square)](https://github.com/leMaur/toolbox/actions/workflows/phpmd.yml?query=branch%3Amaster)
+[![GitHub PHPMD](https://img.shields.io/github/actions/workflow/status/lemaur/toolbox/phpmd.yml?label=PHPMD&style=flat-square)](https://github.com/leMaur/toolbox/actions/workflows/phpmd.yml)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/lemaur?style=flat-square&color=ea4aaa)](https://github.com/sponsors/leMaur)
 [![Trees](https://img.shields.io/badge/dynamic/json?color=yellowgreen&style=flat-square&label=Trees&query=%24.total&url=https%3A%2F%2Fpublic.offset.earth%2Fusers%2Flemaur%2Ftrees)](https://ecologi.com/lemaur?r=6012e849de97da001ddfd6c9)
 
